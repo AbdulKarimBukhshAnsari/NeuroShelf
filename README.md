@@ -18,7 +18,7 @@
 - 🔍 **Duplicate Check**  
   Going book shopping? Open the camera and scan a book — NeuroShelf checks whether you already own it and alerts you if it’s a duplicate.
 
-- ☁️ **Cloud Sync** *(optional)*  
+- ☁️ **Cloud Sync**  
   Sync your book data to a backend (e.g., Supabase or Firebase) so it stays safe and available across devices.
 
 - 🌐 **Multilingual OCR Support**  
