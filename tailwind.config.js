@@ -83,6 +83,11 @@ module.exports = {
         shadowMedium: "rgba(0, 0, 0, 0.1)",  // medium shadow for elevated elements
         shadowDark: "rgba(0, 0, 0, 0.15)",   // stronger shadow for modals/popups
       },
+      fontFamily : {
+        pbold  : ["Poppins-Bold" , "sens-serif"],
+        pregular : ["Poppins-Regular" , "sens-serif"],
+        pmedium : ["Poppins-Medium" , "sens-serif"]
+      }
     },
   },
   plugins: [],

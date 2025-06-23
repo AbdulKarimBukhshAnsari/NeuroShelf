@@ -3,7 +3,7 @@
     "name": "NeuroShelf",
     "slug": "NeuroShelf",
     "version": "1.0.0",
-    "scheme" : "neuroshelf",
+    "scheme": "neuroshelf",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
@@ -27,7 +27,8 @@
       "bundler": "metro"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      "expo-font"
     ]
   }
 }
