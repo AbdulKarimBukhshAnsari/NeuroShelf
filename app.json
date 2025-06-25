@@ -1,9 +1,9 @@
 {
   "expo": {
-    "name": "NeuroShelf",
-    "slug": "NeuroShelf",
+    "name": "KitabiBuddy",
+    "slug": "KitabiBuddy",
     "version": "1.0.0",
-    "scheme": "neuroshelf",
+    "scheme": "KitabiBuddy",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
