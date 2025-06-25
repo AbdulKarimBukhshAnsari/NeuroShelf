@@ -1,10 +1,10 @@
 import { Stack , SplashScreen } from 'expo-router';
 import { useFonts } from 'expo-font';
-import { SafeAreaProvider } from 'react-native-safe-area-context';
 import "../global.css"
-import { useEffect } from 'react';
+import  React , { useEffect } from 'react';
 
-export default function Layout() {
+
+export default function _Layout() {
   SplashScreen.preventAutoHideAsync();
 
   const [fontsloaded , error] = useFonts({
@@ -14,8 +14,9 @@ export default function Layout() {
   }) 
 
   useEffect(() => {
+    
     if(error) throw error 
-    if(fontsloaded) SplashScreen.hideAsync();
+    if(fontsloaded) {SplashScreen.hideAsync()};
   }, [fontsloaded , error])
 
   if(!fontsloaded && !error) {
@@ -23,11 +24,15 @@ export default function Layout() {
   }
   
 
-
-
   return (
-    <SafeAreaProvider>
-      <Stack screenOptions={{headerShown :false}}/>
-    </SafeAreaProvider>
+
+      <Stack >
+        <Stack.Screen
+          name='index'
+          options={{headerShown :false}}
+
+         />
+      </Stack>
+   
   );
 }

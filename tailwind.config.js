@@ -28,7 +28,7 @@ module.exports = {
 
         // Background colors
         backgroundLight: {
-          DEFAULT: "#F4F6F6", // Soft off-white background
+          DEFAULT: "#FFF7FF", // Soft off-white background
           dark: "#E1E6E6",    // Slightly darker for cards or sections
         },
         backgroundDark: {
