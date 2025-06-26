@@ -20,10 +20,13 @@ import {
   MainImageMain,
 } from "../constants/images";
 import LogoComponent from "../components/BaseComponents/Logo/LogoComponent";
+import { useRouter } from "expo-router";
 
 const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 export default function Home() {
+  const router = useRouter();
+
   const [isPressed, setIsPressed] = useState(false);
   const [typedText, setTypedText] = useState('');
   const fullText = "Remembers your books, so you don't have to!!";
@@ -149,7 +152,7 @@ export default function Home() {
       />
 
       <AnimatedPressable 
-        onPress={() => console.log("Button Pressed")}
+        onPress={() => router.replace('/Home')}
         onPressIn={() => setIsPressed(true)}
         onPressOut={() => setIsPressed(false)}
         className={`w-[80vw] py-5 rounded-xl mt-10 items-center justify-center ${
