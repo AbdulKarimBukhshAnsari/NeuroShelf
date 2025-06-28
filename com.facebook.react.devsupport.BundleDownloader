@@ -1,0 +1,11 @@
+const checkSession = async () => {
+      const { data, error } = await supabase.auth.getSession();
+
+      if (data?.session) {
+        router.replace("/Home");
+      } else {
+        router.replace("/SignIn");
+      }
+
+      setLoading(false);
+    };
