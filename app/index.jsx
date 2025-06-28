@@ -182,8 +182,8 @@ export default function Home() {
         style={mainImageStyle}
       />
 
-      <AnimatedPressable
-        onPress={() => router.push("/SignIn")}
+      <AnimatedPressable 
+        onPress={() => router.push('/SignIn')}
         onPressIn={() => setIsPressed(true)}
         onPressOut={() => setIsPressed(false)}
         className={`w-[80vw] py-5 rounded-xl mt-10 items-center justify-center ${
