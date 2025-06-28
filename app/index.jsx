@@ -152,7 +152,7 @@ export default function Home() {
       />
 
       <AnimatedPressable 
-        onPress={() => router.push('/SignIn')}
+        onPress={() => router.push('/Home')}
         onPressIn={() => setIsPressed(true)}
         onPressOut={() => setIsPressed(false)}
         className={`w-[80vw] py-5 rounded-xl mt-10 items-center justify-center ${

@@ -2,12 +2,12 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 
-function Home(){
+function Scan(){
   return (
     <SafeAreaView>
-      <Text>Home</Text>
+      <Text>Scan</Text>
     </SafeAreaView>
   )
 }
 
-export default Home
+export default Scan
