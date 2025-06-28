@@ -1,7 +1,3 @@
-import { createUserAccount } from "../../apis/AuthApis/accountCreation";
-import  supabase  from "../../lib/supabase";
-
-
 import { View, Text, TouchableOpacity, ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import React, { useState } from "react";
@@ -133,6 +129,7 @@ function SignUp() {
 
   return (
     <SafeAreaView className="bg-backgroundLight h-full py-16 px-5">
+      
       <View className="flex flex-row items-center gap-6 justify-center mb-10">
         <LogoComponent />
         <Text className="font-pbold text-primary text-3xl tracking-widest">
@@ -197,6 +194,7 @@ function SignUp() {
           </TouchableOpacity>
         </View>
       </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
