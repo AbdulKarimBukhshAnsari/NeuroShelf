@@ -1,4 +1,4 @@
-import { View, Text, TouchableOpacity, ActivityIndicator } from "react-native";
+import { View, Text, TouchableOpacity, ActivityIndicator, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import React, { useState } from "react";
 import { router } from "expo-router";
@@ -74,6 +74,7 @@ function SignUp() {
 
   return (
     <SafeAreaView className="bg-backgroundLight h-full py-16 px-5">
+      <ScrollView>
       
       <View className="flex flex-row items-center gap-6 justify-center mb-10">
         <LogoComponent />
@@ -139,6 +140,7 @@ function SignUp() {
           </TouchableOpacity>
         </View>
       </View>
+      </ScrollView>
     </SafeAreaView>
   );
 }
