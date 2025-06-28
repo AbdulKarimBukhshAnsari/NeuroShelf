@@ -1,18 +1,22 @@
+import  supabase  from "../lib/supabase";
+import { ActivityIndicator } from "react-native"; 
+
+
 import { StatusBar } from "expo-status-bar";
 import { useState, useEffect } from "react";
 import { View, Text, Image, Pressable } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Animated, { 
-  useSharedValue, 
-  useAnimatedStyle, 
-  withTiming, 
-  withSpring, 
+import Animated, {
+  useSharedValue,
+  useAnimatedStyle,
+  withTiming,
+  withSpring,
   withSequence,
   withDelay,
   interpolate,
   Easing,
-  runOnJS
-} from 'react-native-reanimated';
+  runOnJS,
+} from "react-native-reanimated";
 import {
   BGBookMain,
   CornerBorderMain,
@@ -27,8 +31,26 @@ const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 export default function Home() {
   const router = useRouter();
 
+  const [checkingSession, setCheckingSession] = useState(true); // 👈 New state
+
+  useEffect(() => {
+    const checkUserSession = async () => {
+      const { data } = await supabase.auth.getSession();
+
+      // If session exists AND email is confirmed, go to /Home
+      if (data?.session && data.session.user?.email_confirmed_at) {
+        router.replace("/Home");
+      } else {
+        setCheckingSession(false); 
+      }
+    };
+
+    checkUserSession();
+  }, []);
+
+
   const [isPressed, setIsPressed] = useState(false);
-  const [typedText, setTypedText] = useState('');
+  const [typedText, setTypedText] = useState("");
   const fullText = "Remembers your books, so you don't have to!!";
 
   // Animation values
@@ -64,30 +86,27 @@ export default function Home() {
     );
 
     // Title animation
-    titleOpacity.value = withDelay(600, 
-      withTiming(1, { duration: 800, easing: Easing.bezier(0.25, 0.1, 0.25, 1) })
+    titleOpacity.value = withDelay(
+      600,
+      withTiming(1, {
+        duration: 800,
+        easing: Easing.bezier(0.25, 0.1, 0.25, 1),
+      })
     );
 
     // Corner bar animation
-    cornerBarScale.value = withDelay(1000,
+    cornerBarScale.value = withDelay(
+      1000,
       withSpring(1, { damping: 8, stiffness: 100 })
     );
 
     // Main image animation
-    mainImageTranslateY.value = withDelay(1500,
-      withSpring(0, { damping: 12 })
-    );
-    mainImageOpacity.value = withDelay(1500,
-      withTiming(1, { duration: 800 })
-    );
+    mainImageTranslateY.value = withDelay(1500, withSpring(0, { damping: 12 }));
+    mainImageOpacity.value = withDelay(1500, withTiming(1, { duration: 800 }));
 
     // Button animation
-    buttonTranslateY.value = withDelay(2000,
-      withSpring(0, { damping: 12 })
-    );
-    buttonOpacity.value = withDelay(2000,
-      withTiming(1, { duration: 500 })
-    );
+    buttonTranslateY.value = withDelay(2000, withSpring(0, { damping: 12 }));
+    buttonOpacity.value = withDelay(2000, withTiming(1, { duration: 500 }));
   }, []);
 
   // Animated styles
@@ -97,9 +116,7 @@ export default function Home() {
 
   const titleStyle = useAnimatedStyle(() => ({
     opacity: titleOpacity.value,
-    transform: [
-      { scale: interpolate(titleOpacity.value, [0, 1], [0.8, 1]) }
-    ],
+    transform: [{ scale: interpolate(titleOpacity.value, [0, 1], [0.8, 1]) }],
   }));
 
   const cornerBarStyle = useAnimatedStyle(() => ({
@@ -117,6 +134,17 @@ export default function Home() {
     opacity: buttonOpacity.value,
   }));
 
+
+  if (checkingSession) {
+    return (
+      <SafeAreaView className="flex-1 justify-center items-center bg-backgroundLight">
+        <ActivityIndicator size="large" color="#6D28D9" />
+      </SafeAreaView>
+    );
+  }
+
+
+
   return (
     <SafeAreaView className="bg-backgroundLight h-full items-center px-4">
       <Animated.Image
@@ -130,16 +158,19 @@ export default function Home() {
         className="absolute w-[350px] h-[400px] top-0 left-0 opacity-10"
         resizeMode="contain"
       />
-      <Animated.View className="logo-name items-center gap-10 top-10" style={logoStyle}>
+      <Animated.View
+        className="logo-name items-center gap-10 top-10"
+        style={logoStyle}
+      >
         <LogoComponent />
-        <Animated.Text 
+        <Animated.Text
           className="font-pbold text-5xl text-primary tracking-widest"
           style={titleStyle}
         >
           KitabiBuddy
         </Animated.Text>
       </Animated.View>
-      
+
       <Text className="mt-7 text-secondary font-pregular text-3xl italic text-center leading-relaxed">
         {typedText}
       </Text>
@@ -151,20 +182,23 @@ export default function Home() {
         style={mainImageStyle}
       />
 
-      <AnimatedPressable 
-        onPress={() => router.push('/SignIn')}
+      <AnimatedPressable
+        onPress={() => router.push("/SignIn")}
         onPressIn={() => setIsPressed(true)}
         onPressOut={() => setIsPressed(false)}
         className={`w-[80vw] py-5 rounded-xl mt-10 items-center justify-center ${
-          isPressed ? 'bg-primary/80' : 'bg-primary'
+          isPressed ? "bg-primary/80" : "bg-primary"
         }`}
-        style={[buttonStyle, {
-          elevation: 6,
-          shadowColor: '#000',
-          shadowOffset: { width: 0, height: 3 },
-          shadowOpacity: 0.2,
-          shadowRadius: 4,
-        }]}
+        style={[
+          buttonStyle,
+          {
+            elevation: 6,
+            shadowColor: "#000",
+            shadowOffset: { width: 0, height: 3 },
+            shadowOpacity: 0.2,
+            shadowRadius: 4,
+          },
+        ]}
       >
         <Text className="text-center text-3xl text-white font-pmedium">
           Start

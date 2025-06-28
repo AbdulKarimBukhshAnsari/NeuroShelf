@@ -1,3 +1,7 @@
+import { createUserAccount } from "../../apis/AuthApis/accountCreation";
+import  supabase  from "../../lib/supabase";
+
+
 import { View, Text, TouchableOpacity, ActivityIndicator } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import React, { useState } from "react";
@@ -57,16 +61,71 @@ function SignUp() {
     return isValid;
   };
 
-  const handleSignUp = () => {
+  // const handleSignUp = async () => {
+  //   if (validateForm()) {
+  //     setIsLoading(true);
+  //     const { data, error } = await createUserAccount(
+  //       formData.email,
+  //       formData.password,
+  //       formData.username
+  //     );
+
+  //     // const { data, error } = await loginUser(formData.email, formData.password);
+  //     setIsLoading(false);
+
+  //     if (error) {
+  //       alert(error);
+  //     } else {
+  //       alert("Login successful!");
+  //       
+  //       // router.replace("/Home");
+  //     }
+
+      //   setIsLoading(true);
+      //   // Simulate API call
+      //   setTimeout(() => {
+      //     setIsLoading(false);
+      //     // Navigate to home or handle authentication
+      //   }, 2000);
+  //   }
+  // };
+  const handleSignUp = async () => {
     if (validateForm()) {
       setIsLoading(true);
-      // Simulate API call
-      setTimeout(() => {
-        setIsLoading(false);
-        // Navigate to home or handle authentication
-      }, 2000);
+
+      const { data, error } = await createUserAccount(
+        formData.email,
+        formData.password,
+        formData.username
+      );
+
+      setIsLoading(false);
+
+      if (error) {
+        alert(error);
+      } else {
+        // Check Supabase session
+        const { data: sessionData, error: sessionError } =
+          await supabase.auth.getSession();
+
+        if (sessionError) {
+          alert(
+            "Signup successful, but could not verify session. Please login."
+          );
+          router.replace("/SignIn");
+        } else if (sessionData?.session) {
+          alert("Signup successful!");
+          router.replace("/Home");
+        } else {
+          alert("Signup successful, but no active session found.");
+          router.replace("/SignIn");
+        }
+      }
     }
   };
+  
+
+
 
   const navigateToSignIn = () => {
     router.replace("/SignIn");
@@ -74,7 +133,6 @@ function SignUp() {
 
   return (
     <SafeAreaView className="bg-backgroundLight h-full py-16 px-5">
-      
       <View className="flex flex-row items-center gap-6 justify-center mb-10">
         <LogoComponent />
         <Text className="font-pbold text-primary text-3xl tracking-widest">
@@ -83,7 +141,9 @@ function SignUp() {
       </View>
 
       <View className="mt-6">
-        <Text className="font-pbold text-2xl text-textPrimary mb-2">Sign Up</Text>
+        <Text className="font-pbold text-2xl text-textPrimary mb-2">
+          Sign Up
+        </Text>
         <Text className="font-pregular text-textSecondary mb-8">
           Create an account to get started
         </Text>
@@ -124,9 +184,7 @@ function SignUp() {
           {isLoading ? (
             <ActivityIndicator color="#FFF7FF" />
           ) : (
-            <Text className="font-pmedium text-white text-center">
-              Sign Up
-            </Text>
+            <Text className="font-pmedium text-white text-center">Sign Up</Text>
           )}
         </TouchableOpacity>
 
