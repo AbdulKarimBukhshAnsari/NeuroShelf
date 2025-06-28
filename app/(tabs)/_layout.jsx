@@ -1,9 +1,7 @@
 import React from "react";
 import { Tabs } from "expo-router";
-import { FontAwesome } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import { View, Platform } from "react-native";
+import { FontAwesome , AntDesign , Ionicons } from "@expo/vector-icons";
+import { View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 const TabsLayout = () => {
@@ -16,7 +14,7 @@ const TabsLayout = () => {
         tabBarInactiveTintColor: "#8F9696",
         headerShown: false,
         tabBarStyle: {
-          backgroundColor: "#FFF7FF",
+          backgroundColor: "#F7F9F9",
           height: 65 + insets.bottom,
           paddingBottom: 10 + insets.bottom,
           paddingTop: 10,
