@@ -196,6 +196,7 @@ function SignUp() {
       </View>
       </ScrollView>
     </SafeAreaView>
+  
   );
 }
 
