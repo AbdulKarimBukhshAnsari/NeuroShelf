@@ -1,7 +1,5 @@
 import  supabase  from "../lib/supabase";
 import { ActivityIndicator } from "react-native"; 
-
-
 import { StatusBar } from "expo-status-bar";
 import { useState, useEffect } from "react";
 import { View, Text, Image, Pressable } from "react-native";
@@ -30,24 +28,6 @@ const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
 export default function Home() {
   const router = useRouter();
-
-  const [checkingSession, setCheckingSession] = useState(true); // 👈 New state
-
-  useEffect(() => {
-    const checkUserSession = async () => {
-      const { data } = await supabase.auth.getSession();
-
-      // If session exists AND email is confirmed, go to /Home
-      if (data?.session && data.session.user?.email_confirmed_at) {
-        router.replace("/Home");
-      } else {
-        setCheckingSession(false); 
-      }
-    };
-
-    checkUserSession();
-  }, []);
-
 
   const [isPressed, setIsPressed] = useState(false);
   const [typedText, setTypedText] = useState("");
@@ -133,16 +113,6 @@ export default function Home() {
     transform: [{ translateY: buttonTranslateY.value }],
     opacity: buttonOpacity.value,
   }));
-
-
-  if (checkingSession) {
-    return (
-      <SafeAreaView className="flex-1 justify-center items-center bg-backgroundLight">
-        <ActivityIndicator size="large" color="#6D28D9" />
-      </SafeAreaView>
-    );
-  }
-
 
 
   return (

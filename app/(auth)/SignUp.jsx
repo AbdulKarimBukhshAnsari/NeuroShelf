@@ -1,9 +1,13 @@
-import { View, Text, TouchableOpacity, ActivityIndicator } from "react-native";
+import { View, Text, TouchableOpacity, ActivityIndicator , ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import React, { useState } from "react";
 import { router } from "expo-router";
 import LogoComponent from "../../components/AuthComponents/LogoComponent";
 import InputField from "../../components/AuthComponents/InputField";
+import { createUserAccount } from "../../apis/AuthApis/accountCreation";
+import supabase from "../../lib/supabase";
+import CustomAlert from "../../components/BaseComponents/Alert/CustomAlert";
+
 
 function SignUp() {
   const [formData, setFormData] = useState({
@@ -13,6 +17,9 @@ function SignUp() {
   });
   const [errors, setErrors] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [alertVisible, setAlertVisible] = useState(false);
+  const [alertMessage, setAlertMessage] = useState("");
+  const [alertType, setAlertType] = useState("success");
 
   const handleChange = (field, value) => {
     setFormData({ ...formData, [field]: value });
@@ -57,64 +64,52 @@ function SignUp() {
     return isValid;
   };
 
-  // const handleSignUp = async () => {
-  //   if (validateForm()) {
-  //     setIsLoading(true);
-  //     const { data, error } = await createUserAccount(
-  //       formData.email,
-  //       formData.password,
-  //       formData.username
-  //     );
+  const showAlert = (message, type = "success") => {
+    setAlertMessage(message);
+    setAlertType(type);
+    setAlertVisible(true);
+  };
 
-  //     // const { data, error } = await loginUser(formData.email, formData.password);
-  //     setIsLoading(false);
 
-  //     if (error) {
-  //       alert(error);
-  //     } else {
-  //       alert("Login successful!");
-  //       
-  //       // router.replace("/Home");
-  //     }
-
-      //   setIsLoading(true);
-      //   // Simulate API call
-      //   setTimeout(() => {
-      //     setIsLoading(false);
-      //     // Navigate to home or handle authentication
-      //   }, 2000);
-  //   }
-  // };
   const handleSignUp = async () => {
     if (validateForm()) {
+      console.log("In Handle Sign UP");
       setIsLoading(true);
-
+  
       const { data, error } = await createUserAccount(
         formData.email,
         formData.password,
         formData.username
       );
-
+  
       setIsLoading(false);
-
+  
       if (error) {
-        alert(error);
+        showAlert(error, "error");
       } else {
-        // Check Supabase session
-        const { data: sessionData, error: sessionError } =
-          await supabase.auth.getSession();
-
+        console.log('In the Else part ')
+        // Corrected: get session and error properly
+        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+        console.log("Session Data:", session);
+  
         if (sessionError) {
-          alert(
-            "Signup successful, but could not verify session. Please login."
-          );
-          router.replace("/SignIn");
-        } else if (sessionData?.session) {
-          alert("Signup successful!");
-          router.replace("/Home");
+          showAlert("Signup successful, but session verification failed.", "error");
+          setTimeout(() => {
+            setAlertVisible(false);
+            router.replace("/SignIn");
+          }, 1500);
+        } else if (session) {
+          showAlert("Signup successful!");
+          setTimeout(() => {
+            setAlertVisible(false);
+            router.replace("/Home");
+          }, 1500);
         } else {
-          alert("Signup successful, but no active session found.");
-          router.replace("/SignIn");
+          showAlert("Signup successful, but no active session found.", "error");
+          setTimeout(() => {
+            setAlertVisible(false);
+            router.replace("/SignIn");
+          }, 1500);
         }
       }
     }
@@ -129,7 +124,7 @@ function SignUp() {
 
   return (
     <SafeAreaView className="bg-backgroundLight h-full py-16 px-5">
-      
+      <ScrollView>
       <View className="flex flex-row items-center gap-6 justify-center mb-10">
         <LogoComponent />
         <Text className="font-pbold text-primary text-3xl tracking-widest">
@@ -195,6 +190,13 @@ function SignUp() {
         </View>
       </View>
       </ScrollView>
+
+      <CustomAlert
+        visible={alertVisible}
+        message={alertMessage}
+        type={alertType}
+        onClose={() => setAlertVisible(false)}
+      />
     </SafeAreaView>
   
   );

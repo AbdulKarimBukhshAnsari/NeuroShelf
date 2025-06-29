@@ -4,6 +4,7 @@ import { Stack, SplashScreen } from "expo-router";
 import { useFonts } from "expo-font";
 import "../global.css";
 import React, { useEffect } from "react";
+import supabase from "../lib/supabase";
 
 export default function _Layout() {
   SplashScreen.preventAutoHideAsync();
@@ -24,7 +25,8 @@ export default function _Layout() {
   if (!fontsloaded && !error) {
     return null;
   }
-
+  
+  supabase.auth.signOut();
   return (
     
       <Stack>
