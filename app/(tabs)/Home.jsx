@@ -8,52 +8,51 @@ import {
 import React, { useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Header from "../../components/HomePageComponents/Header";
-import SearchBarRedirect from "../../components/HomePageComponents/SearchBarRedirect";
 import BookCard from "../../components/BaseComponents/BookCard/BookCard";
-import CategoryChips from "../../components/HomePageComponents/CategoryChips";
 import WhishListPreview from "../../components/HomePageComponents/WhishListPreview";
 import { Feather } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
+import TopBanner from "../../components/HomePageComponents/TopBanner";
 
 function Home() {
   const router = useRouter();
   const [recentBooks, setRecentBooks] = useState([
-    // {
-    //   id: '1',
-    //   title: 'The Midnight Library',
-    //   author: 'Matt Haig',
-    //   category: 'Fiction'
-    // },
-    // {
-    //   id: '2',
-    //   title: 'Atomic Habits',
-    //   author: 'James Clear',
-    //   category: 'Self-Help'
-    // },
-    // {
-    //   id: '3',
-    //   title: 'The Psychology of Money',
-    //   author: 'Morgan Housel',
-    //   category: 'Finance'
-    // },
-    // {
-    //   id: '4',
-    //   title: 'Dune',
-    //   author: 'Frank Herbert',
-    //   category: 'Sci-Fi'
-    // },
-    // {
-    //   id: '5',
-    //   title: 'The Silent Patient',
-    //   author: 'Alex Michaelides',
-    //   category: 'Thriller'
-    // },
-    // {
-    //   id: '6',
-    //   title: 'A Court of Thorns and Roses',
-    //   author: 'Sarah J. Maas',
-    //   category: 'Fantasy'
-    // }
+    {
+      id: '1',
+      title: 'The Midnight Library',
+      author: 'Matt Haig',
+      category: 'Fiction'
+    },
+    {
+      id: '2',
+      title: 'Atomic Habits',
+      author: 'James Clear',
+      category: 'Self-Help'
+    },
+    {
+      id: '3',
+      title: 'The Psychology of Money',
+      author: 'Morgan Housel',
+      category: 'Finance'
+    },
+    {
+      id: '4',
+      title: 'Dune',
+      author: 'Frank Herbert',
+      category: 'Sci-Fi'
+    },
+    {
+      id: '5',
+      title: 'The Silent Patient',
+      author: 'Alex Michaelides',
+      category: 'Thriller'
+    },
+    {
+      id: '6',
+      title: 'A Court of Thorns and Roses',
+      author: 'Sarah J. Maas',
+      category: 'Fantasy'
+    }
   ]);
 
   const [wishlistBooks, setWishlistBooks] = useState([
@@ -118,11 +117,10 @@ function Home() {
   return (
     <SafeAreaView className="bg-backgroundLight h-full pb-16">
       <Header />
-      <SearchBarRedirect customStyles="mt-8 py-4 mx-4 mb-4" />
+      <TopBanner />
+ 
       <ScrollView showsVerticalScrollIndicator={false}>
-        <CategoryChips />
-
-        <View className="mt-2">
+        <View className="mt-8">
           <View className="flex-row justify-between items-center px-4 mb-4">
             <Text className="font-pbold text-xl text-textPrimary">
               Recently Added

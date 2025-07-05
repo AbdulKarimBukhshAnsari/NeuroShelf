@@ -4,7 +4,7 @@ import { useRouter } from 'expo-router';
 import { Feather } from '@expo/vector-icons';
 import BookCard from '../BaseComponents/BookCard/BookCard';
 
-const WhishListPreview = ({ wishlistBooks = [] }) => {
+function WhishListPreview ({ wishlistBooks = [] }){
   const router = useRouter();
 
   const handleSeeAllWishlist = () => {
